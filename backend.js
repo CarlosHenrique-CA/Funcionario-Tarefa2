@@ -1,5 +1,3 @@
-// backend.js
-
 class Funcionario {
     constructor(nome, idade, cargo, salario) {
         this.id = Date.now(); // ID único baseado no timestamp
@@ -97,7 +95,27 @@ const editarFuncionario = id => {
 };
 
 // Relatórios
-const listarSalarioMaior5000 = () => console.log(funcionarios.filter(f => f.salario > 5000));
-const calcularMediaSalarial = () => console.log(funcionarios.reduce((acc, f) => acc + f.salario, 0) / funcionarios.length || 0);
-const listarCargosUnicos = () => console.log([...new Set(funcionarios.map(f => f.cargo))]);
-const listarNomesMaiusculo = () => console.log(funcionarios.map(f => f.nome.toUpperCase()));
+const listarSalarioMaior5000 = () => {
+    const resultado = funcionarios.filter(f => f.salario > 5000);
+    document.querySelector("#relatorio").innerText = JSON.stringify(resultado, null, 2);
+};
+
+const calcularMediaSalarial = () => {
+    const media = funcionarios.reduce((acc, f) => acc + f.salario, 0) / funcionarios.length || 0;
+    document.querySelector("#relatorio").innerText = `Média Salarial: R$ ${media.toFixed(2)}`;
+};
+
+const listarCargosUnicos = () => {
+    const cargos = [...new Set(funcionarios.map(f => f.cargo))];
+    document.querySelector("#relatorio").innerText = `Cargos Únicos: ${cargos.join(", ")}`;
+};
+
+const listarNomesMaiusculo = () => {
+    const nomes = funcionarios.map(f => f.nome.toUpperCase());
+    document.querySelector("#relatorio").innerText = `Nomes em Maiúsculo: ${nomes.join(", ")}`;
+};
+
+document.querySelector("#listar-salario-maior-5000").addEventListener("click", listarSalarioMaior5000);
+document.querySelector("#calcular-media-salarial").addEventListener("click", calcularMediaSalarial);
+document.querySelector("#listar-cargos-unicos").addEventListener("click", listarCargosUnicos);
+document.querySelector("#listar-nomes-maiusculo").addEventListener("click", listarNomesMaiusculo);
